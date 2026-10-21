@@ -1,0 +1,34 @@
+---
+import { DIFERENCIAIS } from "../config/conteudo";
+---
+<section class="diferenciais" aria-label="Diferenciais">
+  <div class="container">
+    <ul class="grade">
+      {DIFERENCIAIS.map((d) => (
+        <li>
+          <strong>{d.titulo}</strong>
+          <span>{d.texto}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .diferenciais { border-block: 1px solid rgba(20, 26, 43, 0.1); }
+  /* gap de 1px sobre fundo escuro desenha as linhas divisórias */
+  .grade { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; background: rgba(20, 26, 43, 0.1); }
+  li { background: var(--cor-fundo); padding: 22px 0; display: flex; flex-direction: column; gap: 5px; }
+  strong { font: 700 17px/1.3 var(--fonte-titulo); letter-spacing: -0.015em; }
+  span { font: 500 12px/1.5 var(--fonte-texto); color: var(--cor-texto-2); }
+  @media (min-width: 641px) {
+    .grade { grid-template-columns: repeat(2, 1fr); }
+    li { padding: 26px 24px; }
+    li:nth-child(odd) { padding-left: 0; }
+  }
+  @media (min-width: 900px) {
+    .grade { grid-template-columns: repeat(4, 1fr); }
+    li:nth-child(odd) { padding-left: 24px; }
+    li:first-child { padding-left: 0; }
+  }
+</style>

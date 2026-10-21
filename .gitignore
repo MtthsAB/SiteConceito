@@ -1,0 +1,34 @@
+# Dependências e build
+node_modules/
+dist/
+.astro/
+
+# Gerados por scripts/gerar-imagens.mjs a cada build
+public/favicon.ico
+public/favicon-32.png
+public/apple-touch-icon.png
+public/icon-192.png
+public/icon-512.png
+public/og-image.png
+
+# Material interno (não vai para o repositório público)
+dados/
+Site Conceito.html
+PENDENCIAS.md
+
+# Segredos e configurações locais
+.env
+.env.*
+*.pem
+*.key
+sftp-config.json
+.ftpconfig
+
+# Editor, sistema e logs
+.vscode/
+.idea/
+.claude/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log

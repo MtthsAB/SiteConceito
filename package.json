@@ -1,0 +1,16 @@
+{
+  "name": "site-conceito",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/gerar-imagens.mjs && astro dev",
+    "build": "node scripts/gerar-imagens.mjs && astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@fontsource-variable/archivo": "^5.3.0",
+    "@fontsource-variable/manrope": "^5.3.0",
+    "astro": "^7.3.5",
+    "sharp": "^0.35.5"
+  }
+}

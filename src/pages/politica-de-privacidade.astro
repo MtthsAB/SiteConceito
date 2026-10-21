@@ -1,0 +1,78 @@
+---
+import Base from "../layouts/Base.astro";
+import { SITE } from "../config/site";
+import { enderecoCompleto } from "../lib/contato";
+// Trechos marcados com <mark class="revisar"> precisam ser revisados pela empresa (idealmente com apoio jurídico).
+---
+<Base titulo="Política de Privacidade | Conceito" descricao={`Como a ${SITE.nomeEmpresa} trata os dados pessoais enviados pelo site, conforme a LGPD.`}>
+  <article class="container secao texto">
+    <p class="eyebrow">LGPD</p>
+    <h1>Política de Privacidade</h1>
+    <p class="atualizado">Última atualização: <mark class="revisar">[REVISAR: data de publicação]</mark></p>
+
+    <h2>1. Quem somos</h2>
+    <p>
+      Este site pertence à {SITE.nomeEmpresa}{SITE.cnpj && <>, inscrita no CNPJ {SITE.cnpj}</>}
+      {SITE.endereco && <>, com sede em {enderecoCompleto}</>}, que é a controladora dos dados pessoais tratados por meio dele.
+    </p>
+
+    <h2>2. Quais dados coletamos</h2>
+    <p>Coletamos somente os dados que você informa voluntariamente no formulário de contato:</p>
+    <ul>
+      <li>nome;</li>
+      <li>telefone;</li>
+      <li>nome do condomínio (opcional);</li>
+      <li>mensagem (opcional).</li>
+    </ul>
+    <p>Este site não usa cookies de rastreamento, ferramentas de análise de navegação nem publicidade.</p>
+
+    <h2>3. Para que usamos</h2>
+    <p>
+      Os dados são usados exclusivamente para responder ao seu contato e, se for o caso, elaborar e enviar uma proposta de
+      administração para o seu condomínio. A base legal é o seu consentimento (art. 7º, I, da LGPD) e a realização de
+      procedimentos preliminares a um contrato a seu pedido (art. 7º, V).
+    </p>
+
+    <h2>4. Com quem compartilhamos</h2>
+    <p>
+      Não vendemos nem cedemos seus dados. Para que a mensagem chegue até nós, ela pode passar por serviços de terceiros
+      que funcionam como operadores: <mark class="revisar">[REVISAR: WhatsApp (Meta) e/ou o serviço de formulário utilizado, ex.: Formspree]</mark>.
+    </p>
+    <p>
+      A seção de contato exibe um mapa do Google Maps. Ao carregá-lo, o Google pode coletar dados de navegação
+      conforme a própria política de privacidade dele.
+    </p>
+
+    <h2>5. Por quanto tempo guardamos</h2>
+    <p>
+      Guardamos os dados pelo tempo necessário para tratar o seu contato e a eventual proposta, por no máximo
+      <mark class="revisar">[REVISAR: prazo, ex.: 12 meses]</mark>, salvo obrigação legal de guarda por mais tempo.
+    </p>
+
+    <h2>6. Seus direitos</h2>
+    <p>
+      Você pode, a qualquer momento, pedir confirmação do tratamento, acesso, correção, exclusão dos dados ou revogar o seu
+      consentimento, conforme o art. 18 da LGPD.
+    </p>
+
+    <h2>7. Contato do responsável</h2>
+    <p>
+      Para exercer seus direitos ou tirar dúvidas sobre esta política, fale com o responsável pelo tratamento de dados
+      (<mark class="revisar">[REVISAR: nome do encarregado/DPO]</mark>)
+      {SITE.email ? <>pelo e-mail <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</> : <>pelos canais de contato deste site.</>}
+    </p>
+
+    <h2>8. Alterações</h2>
+    <p>Esta política pode ser atualizada. A versão vigente estará sempre publicada nesta página.</p>
+  </article>
+</Base>
+
+<style>
+  .texto { max-width: 760px; display: flex; flex-direction: column; gap: 16px; }
+  h1 { font-weight: 800; font-size: clamp(2rem, 1.2rem + 3vw, 2.75rem); line-height: 1.08; letter-spacing: -0.024em; }
+  h2 { font-size: 1.25rem; margin-top: 16px; }
+  p, li { color: var(--cor-texto-2); }
+  ul { margin: 0; padding-left: 1.2em; }
+  .atualizado { font-size: 14px; }
+  .revisar { background: #fff3bf; color: var(--cor-texto); padding: 0 4px; border-radius: 4px; }
+</style>

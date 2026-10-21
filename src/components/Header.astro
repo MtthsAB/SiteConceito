@@ -1,0 +1,91 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/marca/logo.png";
+import { SITE } from "../config/site";
+import { ctaWhatsApp } from "../lib/contato";
+
+const links = [
+  { href: "/#inicio", texto: "Início" },
+  { href: "/#servicos", texto: "Serviços" },
+  { href: "/#sobre", texto: "Sobre" },
+  { href: "/#contato", texto: "Contato" },
+];
+---
+<header class="topo">
+  <div class="container topo-in">
+    <a href="/" class="topo-logo">
+      <Image src={logo} alt={SITE.nomeEmpresa} height={30} densities={[1, 2]} loading="eager" />
+    </a>
+    <nav id="menu" class="menu" aria-label="Principal">
+      <ul>
+        {links.map((l) => <li><a href={l.href}>{l.texto}</a></li>)}
+      </ul>
+    </nav>
+    <a class="btn btn-primario topo-wa" {...ctaWhatsApp()}>
+      <span class="ponto-whatsapp" aria-hidden="true"></span>Falar no WhatsApp
+    </a>
+    <button class="menu-botao" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+    </button>
+  </div>
+</header>
+
+<script>
+  const botao = document.querySelector<HTMLButtonElement>(".menu-botao")!;
+  const menu = document.getElementById("menu")!;
+  const definir = (aberto: boolean) => {
+    botao.setAttribute("aria-expanded", String(aberto));
+    botao.setAttribute("aria-label", aberto ? "Fechar menu" : "Abrir menu");
+    menu.toggleAttribute("data-aberto", aberto);
+  };
+  botao.addEventListener("click", () => definir(botao.getAttribute("aria-expanded") !== "true"));
+  menu.addEventListener("click", (e) => (e.target as HTMLElement).closest("a") && definir(false));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && botao.getAttribute("aria-expanded") === "true") {
+      definir(false);
+      botao.focus();
+    }
+  });
+</script>
+
+<style>
+  .topo {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(246, 245, 242, 0.94);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--linha);
+  }
+  .topo-in { display: flex; align-items: center; gap: 16px; min-height: var(--header-h); padding-block: 12px; }
+  .topo-logo { margin-right: auto; flex: none; }
+  .topo-logo img { height: 30px; width: auto; }
+  .menu ul { list-style: none; margin: 0; padding: 0; }
+  .menu a { font: 600 13px var(--fonte-texto); color: var(--cor-texto); text-decoration: none; }
+  .menu a:hover { color: var(--cor-primaria); }
+  .topo-wa { padding: 11px 20px; font-size: 13px; }
+  .menu-botao {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; border: 1px solid var(--borda-botao); border-radius: 50%;
+    background: transparent; color: var(--cor-texto); cursor: pointer;
+  }
+
+  /* Mobile/tablet: menu em painel abaixo do topo */
+  @media (max-width: 899px) {
+    .menu {
+      display: none; position: absolute; top: 100%; left: 0; right: 0;
+      background: var(--cor-fundo); border-bottom: 1px solid var(--linha);
+      box-shadow: 0 12px 24px rgba(20, 26, 43, 0.06);
+    }
+    .menu[data-aberto] { display: block; }
+    .menu ul { max-width: var(--largura-max); margin-inline: auto; padding: 8px var(--gutter) 16px; }
+    .menu a { display: block; padding: 14px 0; font-size: 16px; border-top: 1px solid var(--linha); }
+    .menu li:first-child a { border-top: 0; }
+  }
+  @media (max-width: 640px) {
+    .topo-wa { display: none; } /* no celular o botão flutuante cumpre esse papel */
+  }
+  @media (min-width: 900px) {
+    .menu-botao { display: none; }
+    .menu ul { display: flex; align-items: center; gap: 28px; }
+    .topo-in { gap: 28px; padding-block: 16px; }
+  }
+</style>

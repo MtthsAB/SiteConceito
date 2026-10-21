@@ -1,0 +1,79 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/marca/logo.png";
+import { SITE } from "../config/site";
+import { RODAPE, SERVICOS } from "../config/conteudo";
+
+const ano = new Date().getFullYear(); // atualizado a cada build
+const redes = [
+  { nome: "Instagram", href: SITE.instagram, icone: "M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Zm5 5a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm5.5-1.5h.01" },
+  { nome: "Facebook", href: SITE.facebook, icone: "M15 3h-2.5A3.5 3.5 0 0 0 9 6.5V10H6.5v3.5H9V21h3.5v-7.5H15l.5-3.5h-3V7a1 1 0 0 1 1-1H15Z" },
+  { nome: "LinkedIn", href: SITE.linkedin, icone: "M4 4h16v16H4ZM8 10v6M8 7.5v.01M12 16v-6m0 2.5a2.5 2.5 0 0 1 5 0V16" },
+].filter((r) => r.href);
+---
+<footer class="rodape">
+  <div class="container">
+    <div class="grade">
+      <div class="marca">
+        <Image src={logo} alt={SITE.nomeEmpresa} height={28} densities={[1, 2]} />
+        <p>{RODAPE.descricao}</p>
+        {redes.length > 0 && (
+          <ul class="redes">
+            {redes.map((r) => (
+              <li>
+                <a href={r.href} target="_blank" rel="noopener" aria-label={r.nome}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={r.icone} /></svg>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <nav aria-label="Serviços">
+        <p class="col-titulo">Serviços</p>
+        {SERVICOS.itens.filter((s) => s.rodape).map((s) => <a href="/#servicos">{s.rodape}</a>)}
+      </nav>
+      <nav aria-label="Empresa">
+        <p class="col-titulo">Empresa</p>
+        <a href="/#sobre">Sobre</a>
+        <a href="/#contato">Contato</a>
+        <a href="/politica-de-privacidade/">Política de privacidade</a>
+      </nav>
+      {(SITE.telefone || SITE.email) && (
+        <div class="col">
+          <p class="col-titulo">Contato</p>
+          {SITE.telefone && <a href={SITE.telefoneLink ? `tel:${SITE.telefoneLink}` : undefined}>{SITE.telefone}</a>}
+          {SITE.email && <a href={`mailto:${SITE.email}`}>{SITE.email}</a>}
+        </div>
+      )}
+    </div>
+    <p class="copy">
+      © {ano} {SITE.nomeEmpresa}{SITE.cnpj && <> · CNPJ {SITE.cnpj}</>}
+    </p>
+  </div>
+</footer>
+
+<style>
+  .rodape { background: var(--cor-rodape); border-top: 1px solid var(--linha); padding: 48px 0 34px; }
+  .grade { display: grid; gap: 32px; margin-bottom: 34px; }
+  .marca { display: flex; flex-direction: column; gap: 14px; }
+  .marca img { height: 28px; width: auto; align-self: flex-start; }
+  .marca p { font-size: 13px; color: var(--cor-texto-2); max-width: 280px; }
+  nav, .col { display: flex; flex-direction: column; gap: 9px; }
+  .col-titulo { font: 700 12px var(--fonte-texto); letter-spacing: 0.1em; text-transform: uppercase; color: var(--cor-primaria); }
+  nav a, .col a { font: 400 13px/1.6 var(--fonte-texto); color: var(--cor-texto-2); text-decoration: none; overflow-wrap: anywhere; }
+  nav a:hover, .col a[href]:hover { color: var(--cor-primaria); text-decoration: underline; }
+  .redes { list-style: none; margin: 0; padding: 0; display: flex; gap: 8px; }
+  .redes a { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--borda-botao); color: var(--cor-primaria); }
+  .redes a:hover { border-color: var(--cor-primaria); }
+  .copy { border-top: 1px solid rgba(20, 26, 43, 0.1); padding-top: 18px; font-size: 12px; color: var(--cor-cinza-rodape); }
+  @media (min-width: 641px) {
+    .grade { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 900px) {
+    .grade { grid-template-columns: 1.4fr 1fr 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    .rodape { padding-bottom: 96px; } /* espaço para o botão flutuante */
+  }
+</style>

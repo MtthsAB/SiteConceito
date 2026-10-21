@@ -1,0 +1,23 @@
+---
+import Base from "../layouts/Base.astro";
+import Hero from "../components/Hero.astro";
+import Diferenciais from "../components/Diferenciais.astro";
+import Servicos from "../components/Servicos.astro";
+import ComoFunciona from "../components/ComoFunciona.astro";
+import Sobre from "../components/Sobre.astro";
+import CtaCaixa from "../components/CtaCaixa.astro";
+import Contato from "../components/Contato.astro";
+import { SITE } from "../config/site";
+---
+<Base
+  titulo={`Administração de condomínios em ${SITE.cidade} | Conceito`}
+  descricao={`Administradora de condomínios e imóveis em ${SITE.cidade} (${SITE.estado}) e região: gestão financeira, cobrança, assembleias, pessoal e manutenção. Peça uma proposta.`}
+>
+  <Hero />
+  <Diferenciais />
+  <Servicos />
+  <ComoFunciona />
+  <Sobre />
+  <CtaCaixa />
+  <Contato />
+</Base>

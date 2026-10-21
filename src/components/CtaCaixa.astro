@@ -1,0 +1,36 @@
+---
+import { Image } from "astro:assets";
+import simbolo from "../assets/marca/simbolo.png";
+import { CTA } from "../config/conteudo";
+import { ctaWhatsApp } from "../lib/contato";
+---
+<section class="container" aria-labelledby="cta-titulo">
+  <div class="caixa">
+    <Image src={simbolo} alt="" width={200} densities={[1, 2]} class="marca-dagua" />
+    <div class="texto">
+      <h2 id="cta-titulo">{CTA.titulo}</h2>
+      <p>{CTA.texto}</p>
+    </div>
+    <a class="btn btn-primario" {...ctaWhatsApp()}>{CTA.botao}</a>
+  </div>
+</section>
+
+<style>
+  .caixa {
+    position: relative; overflow: hidden;
+    background: var(--cor-cta); border-radius: var(--raio-cta);
+    padding: 40px 24px; display: flex; flex-direction: column; align-items: flex-start; gap: 24px;
+  }
+  .caixa :global(.marca-dagua) { position: absolute; right: -30px; bottom: -50px; width: 200px; height: auto; opacity: 0.1; pointer-events: none; }
+  .texto { position: relative; display: flex; flex-direction: column; gap: 12px; }
+  h2 { font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.125rem); max-width: 440px; }
+  p { font-size: 15px; color: var(--cor-texto-2); }
+  .btn { position: relative; padding: 18px 30px; font-size: 16px; white-space: nowrap; }
+  @media (max-width: 640px) {
+    .btn { width: 100%; white-space: normal; }
+  }
+  @media (min-width: 900px) {
+    .caixa { flex-direction: row; align-items: center; justify-content: space-between; gap: 40px; padding: 56px 52px; }
+    .caixa :global(.marca-dagua) { right: 220px; }
+  }
+</style>

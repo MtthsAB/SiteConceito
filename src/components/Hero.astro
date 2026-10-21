@@ -1,0 +1,46 @@
+---
+import { Picture } from "astro:assets";
+import fachada from "../assets/placeholder/fachada.jpg";
+import { HERO } from "../config/conteudo";
+import { ctaWhatsApp } from "../lib/contato";
+---
+<section id="inicio" class="container hero">
+  <div class="hero-texto">
+    <p class="eyebrow">{HERO.eyebrow}</p>
+    <h1>{HERO.titulo}</h1>
+    <p class="hero-p">{HERO.texto}</p>
+    <div class="hero-botoes">
+      <a class="btn btn-primario btn-sombra" {...ctaWhatsApp()}>{HERO.botaoWhatsApp}</a>
+      <a class="btn btn-contorno" href="#servicos">{HERO.botaoServicos}</a>
+    </div>
+  </div>
+  <div class="hero-foto">
+    <Picture
+      src={fachada}
+      alt={HERO.altImagem}
+      formats={["avif", "webp"]}
+      widths={[480, 720, 960, 1200]}
+      sizes="(min-width: 900px) 540px, (min-width: 641px) 90vw, 100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="foto"
+    />
+  </div>
+</section>
+
+<style>
+  .hero { display: grid; gap: 36px; padding-block: 40px 48px; align-items: center; }
+  .hero-texto { display: flex; flex-direction: column; gap: 22px; }
+  h1 { font-weight: 800; font-size: clamp(2.25rem, 1.2rem + 4.2vw, 3.375rem); line-height: 1.03; letter-spacing: -0.028em; }
+  .hero-p { font-size: 17px; line-height: 1.6; color: var(--cor-texto-2); max-width: 460px; }
+  .hero-botoes { display: flex; flex-wrap: wrap; gap: 14px; }
+  .hero-foto { aspect-ratio: 4 / 3; }
+  .hero-foto :global(picture) { display: block; height: 100%; }
+  @media (max-width: 640px) {
+    .hero-botoes .btn { flex: 1 1 100%; }
+  }
+  @media (min-width: 900px) {
+    .hero { grid-template-columns: 1.05fr 0.95fr; gap: 48px; padding-block: 64px 56px; }
+    .hero-foto { aspect-ratio: auto; height: 440px; }
+  }
+</style>

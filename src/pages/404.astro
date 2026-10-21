@@ -1,0 +1,22 @@
+---
+import Base from "../layouts/Base.astro";
+import { ctaWhatsApp } from "../lib/contato";
+---
+<Base titulo="Página não encontrada | Conceito" descricao="A página que você procurou não existe ou foi movida." indexar={false}>
+  <section class="container secao erro">
+    <p class="eyebrow">Erro 404</p>
+    <h1>Página não encontrada</h1>
+    <p>O endereço pode ter sido digitado errado ou a página mudou de lugar.</p>
+    <div class="botoes">
+      <a class="btn btn-primario" href="/">Voltar para o início</a>
+      <a class="btn btn-contorno" {...ctaWhatsApp()}>Falar no WhatsApp</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .erro { display: flex; flex-direction: column; gap: 20px; min-height: 60vh; justify-content: center; }
+  h1 { font-weight: 800; font-size: clamp(2.25rem, 1.2rem + 4.2vw, 3.375rem); line-height: 1.05; letter-spacing: -0.028em; }
+  p:not(.eyebrow) { color: var(--cor-texto-2); font-size: 17px; }
+  .botoes { display: flex; flex-wrap: wrap; gap: 14px; }
+</style>

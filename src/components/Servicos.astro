@@ -1,0 +1,44 @@
+---
+import { SERVICOS } from "../config/conteudo";
+---
+<section id="servicos" class="container secao">
+  <div class="cabecalho">
+    <div class="titulo">
+      <p class="eyebrow">{SERVICOS.eyebrow}</p>
+      <h2>{SERVICOS.titulo}</h2>
+    </div>
+    <p class="lateral">{SERVICOS.texto}</p>
+  </div>
+  <ul class="grade">
+    {SERVICOS.itens.map((s, i) => (
+      <li class="card">
+        <span class="num" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+        <h3>{s.titulo}</h3>
+        <p>{s.texto}</p>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .cabecalho { display: flex; flex-direction: column; gap: 16px; margin-bottom: 34px; }
+  .titulo { display: flex; flex-direction: column; gap: 12px; }
+  h2 { max-width: 480px; }
+  .lateral { font-size: 15px; color: var(--cor-texto-2); max-width: 300px; }
+  .grade { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+  .card {
+    background: var(--cor-branco); border: 1px solid var(--linha); border-radius: var(--raio-card);
+    padding: 28px; display: flex; flex-direction: column; gap: 12px; transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--cor-primaria); }
+  .num { font: 700 12px var(--fonte-titulo); color: var(--cor-destaque-texto); letter-spacing: 0.1em; }
+  h3 { font-size: 20px; }
+  .card p { font-size: 14px; color: var(--cor-texto-2); }
+  @media (min-width: 641px) {
+    .grade { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 900px) {
+    .cabecalho { flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 32px; }
+    #servicos { padding-bottom: 64px; }
+  }
+</style>

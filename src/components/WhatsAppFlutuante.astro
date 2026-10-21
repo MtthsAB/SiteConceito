@@ -1,0 +1,27 @@
+---
+import { linkWhatsApp } from "../lib/contato";
+const href = linkWhatsApp();
+---
+{href && (
+  <a class="wa-flutuante" href={href} target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5Z" />
+    </svg>
+    <span class="ponto-whatsapp" aria-hidden="true"></span>
+  </a>
+)}
+
+<style>
+  .wa-flutuante {
+    position: fixed; right: 16px; bottom: 16px; z-index: 40;
+    width: 58px; height: 58px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--cor-primaria); color: #fff;
+    box-shadow: 0 8px 22px rgba(46, 79, 152, 0.35);
+  }
+  .wa-flutuante:hover { background: var(--cor-destaque); }
+  .ponto-whatsapp { position: absolute; top: 12px; right: 12px; width: 10px; height: 10px; border: 2px solid var(--cor-primaria); box-sizing: content-box; }
+  @media (min-width: 641px) {
+    .wa-flutuante { display: none; }
+  }
+</style>

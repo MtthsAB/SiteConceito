@@ -1,0 +1,37 @@
+---
+import { Picture } from "astro:assets";
+import equipe from "../assets/placeholder/equipe.jpg";
+import { SOBRE } from "../config/conteudo";
+---
+<section id="sobre" class="container secao sobre">
+  <div class="sobre-foto">
+    <Picture
+      src={equipe}
+      alt={SOBRE.altImagem}
+      formats={["avif", "webp"]}
+      widths={[480, 720, 960]}
+      sizes="(min-width: 900px) 520px, 100vw"
+      class="foto"
+    />
+  </div>
+  <div class="sobre-texto">
+    <p class="eyebrow">{SOBRE.eyebrow}</p>
+    <h2>{SOBRE.titulo}</h2>
+    <p class="p">{SOBRE.texto}</p>
+    <a class="btn btn-contorno" href="#contato">{SOBRE.botao}</a>
+  </div>
+</section>
+
+<style>
+  .sobre { display: grid; gap: 36px; align-items: center; }
+  .sobre-foto { aspect-ratio: 4 / 3; }
+  .sobre-foto :global(picture) { display: block; height: 100%; }
+  .sobre-texto { display: flex; flex-direction: column; gap: 20px; }
+  h2 { font-size: clamp(1.75rem, 1.2rem + 1.9vw, 2.25rem); line-height: 1.14; }
+  .p { font-size: 16px; line-height: 1.65; color: var(--cor-texto-2); max-width: 500px; }
+  .btn { align-self: flex-start; padding: 14px 24px; font-size: 14px; }
+  @media (min-width: 900px) {
+    .sobre { grid-template-columns: 0.95fr 1.05fr; gap: 52px; }
+    .sobre-foto { aspect-ratio: auto; height: 340px; }
+  }
+</style>

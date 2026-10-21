@@ -1,0 +1,38 @@
+---
+import { COMO_FUNCIONA } from "../config/conteudo";
+const cores = ["var(--cor-primaria)", "var(--cor-destaque)", "var(--cor-cinza)"];
+---
+<section class="como" aria-labelledby="como-titulo">
+  <div class="container">
+    <div class="titulo">
+      <p class="eyebrow">{COMO_FUNCIONA.eyebrow}</p>
+      <h2 id="como-titulo">{COMO_FUNCIONA.titulo}</h2>
+    </div>
+    <ol class="passos">
+      {COMO_FUNCIONA.passos.map((p, i) => (
+        <li style={`--cor: ${cores[i % cores.length]}`}>
+          <span class="num" aria-hidden="true">{i + 1}</span>
+          <h3>{p.titulo}</h3>
+          <p>{p.texto}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .como { background: var(--cor-branco); border-block: 1px solid var(--linha); padding-block: calc(var(--secao-y) - 4px); }
+  .titulo { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+  h2 { font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.125rem); }
+  .passos { list-style: none; margin: 0; padding: 0; display: grid; gap: 32px; }
+  li { display: flex; flex-direction: column; gap: 12px; padding-top: 20px; border-top: 2px solid var(--cor); }
+  .num { font: 800 28px/1 var(--fonte-titulo); color: var(--cor); }
+  h3 { font-size: 18px; }
+  p { font-size: 14px; color: var(--cor-texto-2); }
+  @media (min-width: 641px) {
+    .passos { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  }
+  @media (min-width: 900px) {
+    .passos { gap: 32px; }
+  }
+</style>
