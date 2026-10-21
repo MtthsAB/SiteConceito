@@ -25,117 +25,15 @@ const itens = [
         ))}
       </dl>
     )}
-    {embedMapa && (
-      <div class="mapa">
-        <iframe src={embedMapa} title={`Mapa: ${enderecoCompleto}`} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        <a class="btn btn-contorno" href={linkMapa} target="_blank" rel="noopener">Como chegar</a>
-      </div>
-    )}
   </div>
 
-  <form
-    id="form-contato"
-    class="form"
-    data-endpoint={SITE.formularioEndpoint}
-    data-whatsapp={SITE.whatsapp}
-    data-email={SITE.email}
-    action={SITE.formularioEndpoint || undefined}
-    method="post"
-  >
-    <div class="linha-2">
-      <label>Nome
-        <input name="nome" type="text" placeholder="Seu nome" autocomplete="name" required maxlength="100" />
-      </label>
-      <label>Telefone
-        <input name="telefone" type="tel" inputmode="tel" placeholder="(54) 00000-0000" autocomplete="tel" required
-          pattern="\(\d{2}\) \d{4,5}-\d{4}" title="Informe o telefone com DDD, ex.: (54) 99999-0000" />
-      </label>
+  {embedMapa && (
+    <div class="mapa">
+      <iframe src={embedMapa} title={`Mapa: ${enderecoCompleto}`} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <a class="btn btn-contorno" href={linkMapa} target="_blank" rel="noopener">Como chegar</a>
     </div>
-    <label>Condomínio
-      <input name="condominio" type="text" placeholder="Nome do condomínio" maxlength="120" />
-    </label>
-    <label>Mensagem
-      <textarea name="mensagem" rows="4" placeholder="Conte um pouco sobre o condomínio" maxlength="2000"></textarea>
-    </label>
-
-    <!-- Armadilha anti-spam: invisível para pessoas, robôs preenchem -->
-    <div class="hp" aria-hidden="true">
-      <label>Não preencha<input name="_gotcha" type="text" tabindex="-1" autocomplete="off" /></label>
-    </div>
-
-    <label class="consentimento">
-      <input name="consentimento" type="checkbox" value="sim" required />
-      <span>Concordo com o uso dos meus dados para retorno do contato, conforme a <a href="/politica-de-privacidade/">Política de Privacidade</a>.</span>
-    </label>
-
-    <button class="btn btn-primario" type="submit">Enviar mensagem</button>
-    <p class="status" role="status" aria-live="polite"></p>
-  </form>
+  )}
 </section>
-
-<script>
-  const form = document.getElementById("form-contato") as HTMLFormElement;
-  const botao = form.querySelector("button")!;
-  const status = form.querySelector<HTMLElement>(".status")!;
-  const tel = form.elements.namedItem("telefone") as HTMLInputElement;
-
-  // Máscara simples: (54) 99999-0000 ou (54) 3333-0000
-  tel.addEventListener("input", () => {
-    const d = tel.value.replace(/\D/g, "").slice(0, 11);
-    tel.value =
-      d.length > 10 ? `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`
-      : d.length > 6 ? `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`
-      : d.length > 2 ? `(${d.slice(0, 2)}) ${d.slice(2)}`
-      : d;
-  });
-
-  const mostrar = (tipo: "ok" | "erro" | "", texto: string) => {
-    status.textContent = texto;
-    status.dataset.tipo = tipo;
-  };
-
-  // A validação (campos obrigatórios, telefone, consentimento) é feita pelo navegador antes deste evento
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const dados = new FormData(form);
-    if (dados.get("_gotcha")) return mostrar("ok", "Mensagem enviada. Obrigado!"); // robô: finge sucesso
-
-    const { endpoint, whatsapp, email } = form.dataset;
-
-    if (endpoint) {
-      botao.disabled = true;
-      botao.textContent = "Enviando…";
-      mostrar("", "");
-      try {
-        const r = await fetch(endpoint, { method: "POST", body: dados, headers: { Accept: "application/json" } });
-        if (!r.ok) throw new Error(String(r.status));
-        form.reset();
-        mostrar("ok", "Mensagem enviada! Retornaremos em breve.");
-      } catch {
-        mostrar("erro", "Não foi possível enviar agora. Tente novamente ou fale pelo WhatsApp.");
-      } finally {
-        botao.disabled = false;
-        botao.textContent = "Enviar mensagem";
-      }
-      return;
-    }
-
-    // Sem serviço de formulário: monta a mensagem e abre o WhatsApp (ou e-mail)
-    const campos: [string, string][] = [["Nome", "nome"], ["Telefone", "telefone"], ["Condomínio", "condominio"], ["Mensagem", "mensagem"]];
-    const texto = ["Olá! Vim pelo site.", ...campos.filter(([, n]) => String(dados.get(n) ?? "").trim()).map(([r, n]) => `${r}: ${String(dados.get(n)).trim()}`)].join("\n");
-
-    if (whatsapp) {
-      const url = `https://wa.me/${whatsapp}?text=${encodeURIComponent(texto)}`;
-      if (!window.open(url, "_blank")) location.href = url;
-      mostrar("ok", "Abrimos o WhatsApp com a sua mensagem. É só tocar em enviar.");
-    } else if (email) {
-      location.href = `mailto:${email}?subject=${encodeURIComponent("Contato pelo site")}&body=${encodeURIComponent(texto)}`;
-      mostrar("ok", "Abrimos o seu e-mail com a mensagem pronta. É só enviar.");
-    } else {
-      mostrar("erro", "Contato indisponível no momento.");
-    }
-  });
-</script>
 
 <style>
   .contato { display: grid; gap: 40px; align-items: start; }
@@ -149,39 +47,11 @@ const itens = [
   dd a { color: var(--cor-texto); text-decoration: none; }
   dd a:hover { color: var(--cor-primaria); text-decoration: underline; }
   .mapa { display: flex; flex-direction: column; gap: 12px; }
-  .mapa iframe { width: 100%; height: 260px; border: 1px solid var(--linha); border-radius: var(--raio-imagem); }
+  .mapa iframe { width: 100%; height: 320px; border: 1px solid var(--linha); border-radius: var(--raio-imagem); }
   .mapa .btn { align-self: flex-start; padding: 12px 22px; font-size: 14px; }
 
-  .form {
-    background: var(--cor-branco); border: 1px solid var(--linha); border-radius: var(--raio-imagem);
-    padding: 22px; display: flex; flex-direction: column; gap: 14px;
-  }
-  .linha-2 { display: grid; gap: 14px; }
-  label { display: flex; flex-direction: column; gap: 6px; font: 600 12px var(--fonte-texto); color: var(--cor-texto-2); }
-  input[type="text"], input[type="tel"], textarea {
-    width: 100%; height: 46px; padding: 0 14px;
-    border: 1px solid rgba(20, 26, 43, 0.16); border-radius: 10px;
-    font: 400 16px var(--fonte-texto); color: var(--cor-texto); background: var(--cor-fundo);
-  }
-  textarea { height: 96px; padding: 12px 14px; resize: vertical; }
-  input:focus-visible, textarea:focus-visible { outline: 2px solid var(--cor-primaria); outline-offset: 1px; border-color: var(--cor-primaria); }
-  input:user-invalid, textarea:user-invalid { border-color: var(--cor-erro); }
-  .consentimento { flex-direction: row; align-items: flex-start; gap: 10px; font-weight: 500; line-height: 1.5; }
-  .consentimento input { width: 18px; height: 18px; margin: 1px 0 0; flex: none; accent-color: var(--cor-primaria); }
-  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-  .form .btn { height: 50px; padding-block: 0; }
-  .form .btn:disabled { opacity: 0.7; cursor: progress; }
-  .status { font-size: 14px; font-weight: 600; min-height: 1px; }
-  .status[data-tipo="ok"] { color: #1d6b3a; }
-  .status[data-tipo="erro"] { color: var(--cor-erro); }
-  .status:empty { display: none; }
-
-  @media (min-width: 641px) {
-    .form { padding: 30px; }
-    .linha-2 { grid-template-columns: 1fr 1fr; }
-    input[type="text"], input[type="tel"], textarea { font-size: 14px; }
-  }
   @media (min-width: 900px) {
     .contato { grid-template-columns: 0.9fr 1.1fr; gap: 52px; }
+    .mapa iframe { height: 380px; }
   }
 </style>

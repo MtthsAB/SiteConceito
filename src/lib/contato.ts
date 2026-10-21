@@ -26,7 +26,7 @@ export const linkMapa = SITE.endereco ? `https://www.google.com/maps/search/?api
 /** Mapa incorporável, sem chave de API. */
 export const embedMapa = SITE.endereco ? `https://maps.google.com/maps?q=${buscaMapa}&z=16&output=embed` : "";
 
-/** Atributos de um botão de WhatsApp. Sem número no config, cai para o formulário de contato. */
+/** Atributos de um botão de WhatsApp. Sem número no config, cai para a seção de contato. */
 export function ctaWhatsApp(mensagem?: string) {
   const href = linkWhatsApp(mensagem);
   return href ? { href, target: "_blank", rel: "noopener" } : { href: "/#contato" };

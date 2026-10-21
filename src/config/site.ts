@@ -36,11 +36,6 @@ export const SITE = {
   bairro: "Centro",
   cep: "95270-000", // ex.: "95270-000"
 
-  // --- Formulário de contato ---------------------------------------------------
-  // Cole aqui a URL do Formspree (ex.: "https://formspree.io/f/abcdwxyz").
-  // Se ficar vazio, o formulário abre o WhatsApp com a mensagem preenchida.
-  formularioEndpoint: "",
-
   // --- Redes sociais (link completo; deixe vazio para ocultar o ícone) --------
   instagram: "", // ex.: "https://www.instagram.com/suaempresa"
   facebook: "",

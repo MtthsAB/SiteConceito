@@ -10,7 +10,7 @@ em qualquer hospedagem, sem banco de dados e sem nada instalado no servidor.
 
 | O que mudar | Arquivo |
 |---|---|
-| Telefone, WhatsApp, e-mail, endereço, CNPJ, domínio, redes sociais, formulário | `src/config/site.ts` |
+| Telefone, WhatsApp, e-mail, endereço, CNPJ, domínio, redes sociais | `src/config/site.ts` |
 | Textos das seções (títulos, serviços, passos, diferenciais, rodapé) | `src/config/conteudo.ts` |
 
 Abra o arquivo em qualquer editor de texto (recomendado: [VS Code](https://code.visualstudio.com/)),
@@ -117,25 +117,6 @@ server {
     add_header X-Frame-Options "SAMEORIGIN" always;
 }
 ```
-
-## 6. Receber o formulário por e-mail (Formspree)
-
-Sem configuração, o formulário de contato abre o WhatsApp da empresa com a mensagem já escrita.
-Para receber por **e-mail**:
-
-1. Crie uma conta gratuita em <https://formspree.io> (o plano grátis tem limite mensal de envios).
-2. Clique em **New Form**, dê um nome (ex.: "Site Conceito") e informe o e-mail que vai receber as mensagens.
-3. Copie a URL do formulário, no formato `https://formspree.io/f/xxxxxxx`.
-4. Cole em `src/config/site.ts`:
-   ```ts
-   formularioEndpoint: "https://formspree.io/f/xxxxxxx",
-   ```
-5. Rode `npm run build` e publique de novo.
-6. Envie uma mensagem de teste pelo site. Na primeira vez, o Formspree pede para confirmar o e-mail.
-
-Qualquer serviço compatível (Getform, Basin, etc.) que aceite `POST` com os dados do formulário também funciona.
-O campo `_gotcha` é uma armadilha anti-spam reconhecida pelo Formspree.
-Se trocar de serviço, atualize o item 4 da Política de Privacidade.
 
 ---
 
