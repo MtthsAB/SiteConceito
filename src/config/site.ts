@@ -27,7 +27,7 @@ export const SITE = {
 
   // --- Contato ---------------------------------------------------------------
   telefone: "(54) 3292-2770", // como aparece na tela
-  telefoneLink: "+5554984332770", // usado para ligar ao tocar: + 55 + DDD + número, sem espaços
+  telefoneLink: "+555432922770", // usado para ligar ao tocar: + 55 + DDD + número, sem espaços
   whatsapp: "5554984332770", // SÓ números: 55 + DDD + número (ex.: 5554999998888)
   // Mensagem que já vem escrita quando a pessoa abre o WhatsApp
   whatsappMensagemPadrao: "Olá, gostaria de uma proposta para o meu condomínio.",
